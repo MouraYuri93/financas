@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanças - Mês</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <h1 th:text="${mes} + ' - Finanças'">Mês - Finanças</h1>
+</header>
+
+<section>
+    <button class="back-button" onclick="voltarParaInicial()">⬅ Voltar</button>
+    <h2>Categorias</h2>
+    <ul>
+        <li><a th:href="@{/categoria(categoria='cartao_credito', mes=${mes})}">Cartão de Crédito - R$ 0,00</a></li>
+        <li><a th:href="@{/categoria(categoria='educacao', mes=${mes})}">Educação - R$ 0,00</a></li>
+        <li><a th:href="@{/categoria(categoria='emprestimo', mes=${mes})}">Empréstimo - R$ 0,00</a></li>
+        <li><a th:href="@{/categoria(categoria='entretenimento', mes=${mes})}">Entretenimento - R$ 0,00</a></li>
+        <li><a th:href="@{/categoria(categoria='moradia', mes=${mes})}">Moradia - R$ 0,00</a></li>
+        <li><a th:href="@{/categoria(categoria='saude', mes=${mes})}">Saúde - R$ 0,00</a></li>
+    </ul>
+</section>
+
+<section class="total-mes">
+    <h3>Total de Gastos do Mês</h3>
+    <p>R$ <span th:text="${totalMes}">0,00</span></p>
+</section>
+
+<footer class="navigation-footer">
+    <button onclick="navegarMesAnterior()">&#171; Mês Anterior</button>
+    <button onclick="navegarProximoMes()">Próximo Mês &#187;</button>
+</footer>
+
+<script src="script/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanças - Tela Inicial</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <h1>Controle de Finanças</h1>
+</header>
+
+<section>
+    <h2>Meses</h2>
+    <ul class="meses-lista">
+        <li><a href="/mes?mes=janeiro">Janeiro - R$ 0,00</a></li>
+        <li><a href="/mes?mes=fevereiro">Fevereiro - R$ 0,00</a></li>
+        <li><a href="/mes?mes=marco">Março - R$ 0,00</a></li>
+        <li><a href="/mes?mes=abril">Abril - R$ 0,00</a></li>
+        <li><a href="/mes?mes=maio">Maio - R$ 0,00</a></li>
+        <li><a href="/mes?mes=junho">Junho - R$ 0,00</a></li>
+        <li><a href="/mes?mes=julho">Julho - R$ 0,00</a></li>
+        <li><a href="/mes?mes=agosto">Agosto - R$ 0,00</a></li>
+        <li><a href="/mes?mes=setembro">Setembro - R$ 0,00</a></li>
+        <li><a href="/mes?mes=outubro">Outubro - R$ 0,00</a></li>
+        <li><a href="/mes?mes=novembro">Novembro - R$ 0,00</a></li>
+        <li><a href="/mes?mes=dezembro">Dezembro - R$ 0,00</a></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Configurações</h2>
+    <button onclick="abrirModal('modalSalario')">Definir Salário</button>
+    <button onclick="abrirModal('modalNovaCategoria')">Adicionar Categoria</button>
+</section>
+
+<!-- Modais -->
+<div id="modalSalario" class="modal">
+    <h2>Definir Salário</h2>
+    <input type="number" placeholder="R$ 2300,00" id="salarioInput">
+    <button onclick="salvarSalario()">Salvar</button>
+    <button onclick="fecharModal('modalSalario')">Cancelar</button>
+</div>
+
+<div id="modalNovaCategoria" class="modal">
+    <h2>Nova Categoria</h2>
+    <input type="text" placeholder="Digite a categoria" id="categoriaInput">
+    <button onclick="salvarCategoria()">Salvar</button>
+    <button onclick="fecharModal('modalNovaCategoria')">Cancelar</button>
+</div>
+
+<script src="script/script.js"></script>
+</body>
+</html>

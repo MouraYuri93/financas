@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanças - Categoria</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <h1 th:text="${categoria} + ' - ' + ${mes}">Categoria - Mês</h1>
+</header>
+
+<section>
+    <button class="back-button" onclick="voltarParaMes()">⬅ Voltar</button>
+    <h2>Gastos</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Descrição</th>
+            <th>Data</th>
+            <th>Valor</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Almoço</td>
+            <td>03/11/2024</td>
+            <td>R$ 16,00</td>
+            <td>
+                <button onclick="editarDespesa()">✏️</button>
+                <button onclick="removerDespesa()">🗑️</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<button onclick="abrirModal('modalNovaDespesa')">+ Nova Despesa</button>
+
+<footer class="navigation-footer">
+    <button onclick="navegarCategoriaAnterior()">&#8249; Categoria Anterior</button>
+    <button onclick="navegarCategoriaProxima()">Próxima Categoria &#8250;</button>
+</footer>
+
+<script src="script/script.js"></script>
+</body>
+</html>
