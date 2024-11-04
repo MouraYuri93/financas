@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finanças - Tela Inicial</title>
     <link rel="stylesheet" href="/css/style.css">
+    <script>
+        function atualizarAno(ano) {
+            document.getElementById('anoAtual').innerText = ano;
+            const meses = ["janeiro", "fevereiro", "marco", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+            const listaMeses = document.querySelector('.meses-lista');
+            listaMeses.innerHTML = ''; // Limpa a lista existente
+
+            meses.forEach(mes => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<a href="/mes?mes=${mes}&ano=${ano}">${mes.charAt(0).toUpperCase() + mes.slice(1)} - R$ 0,00</a>`;
+                listaMeses.appendChild(listItem);
+            });
+        }
+    </script>
 </head>
 <body>
 <header>
@@ -12,20 +26,32 @@
 </header>
 
 <section>
-    <h2>Meses</h2>
+    <h2>Selecionar Ano</h2>
+    <div class="select-container">
+        <select id="anoSelect" onchange="atualizarAno(this.value)">
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <!-- Adicione mais anos conforme necessário -->
+        </select>
+    </div>
+</section>
+
+<section>
+    <h2>Meses - Ano <span id="anoAtual">2024</span></h2>
     <ul class="meses-lista">
-        <li><a href="/mes?mes=janeiro">Janeiro - R$ 0,00</a></li>
-        <li><a href="/mes?mes=fevereiro">Fevereiro - R$ 0,00</a></li>
-        <li><a href="/mes?mes=marco">Março - R$ 0,00</a></li>
-        <li><a href="/mes?mes=abril">Abril - R$ 0,00</a></li>
-        <li><a href="/mes?mes=maio">Maio - R$ 0,00</a></li>
-        <li><a href="/mes?mes=junho">Junho - R$ 0,00</a></li>
-        <li><a href="/mes?mes=julho">Julho - R$ 0,00</a></li>
-        <li><a href="/mes?mes=agosto">Agosto - R$ 0,00</a></li>
-        <li><a href="/mes?mes=setembro">Setembro - R$ 0,00</a></li>
-        <li><a href="/mes?mes=outubro">Outubro - R$ 0,00</a></li>
-        <li><a href="/mes?mes=novembro">Novembro - R$ 0,00</a></li>
-        <li><a href="/mes?mes=dezembro">Dezembro - R$ 0,00</a></li>
+        <li><a href="/mes?mes=janeiro&ano=2024">Janeiro - R$ 0,00</a></li>
+        <li><a href="/mes?mes=fevereiro&ano=2024">Fevereiro - R$ 0,00</a></li>
+        <li><a href="/mes?mes=marco&ano=2024">Março - R$ 0,00</a></li>
+        <li><a href="/mes?mes=abril&ano=2024">Abril - R$ 0,00</a></li>
+        <li><a href="/mes?mes=maio&ano=2024">Maio - R$ 0,00</a></li>
+        <li><a href="/mes?mes=junho&ano=2024">Junho - R$ 0,00</a></li>
+        <li><a href="/mes?mes=julho&ano=2024">Julho - R$ 0,00</a></li>
+        <li><a href="/mes?mes=agosto&ano=2024">Agosto - R$ 0,00</a></li>
+        <li><a href="/mes?mes=setembro&ano=2024">Setembro - R$ 0,00</a></li>
+        <li><a href="/mes?mes=outubro&ano=2024">Outubro - R$ 0,00</a></li>
+        <li><a href="/mes?mes=novembro&ano=2024">Novembro - R$ 0,00</a></li>
+        <li><a href="/mes?mes=dezembro&ano=2024">Dezembro - R$ 0,00</a></li>
     </ul>
 </section>
 
@@ -35,19 +61,42 @@
     <button onclick="abrirModal('modalNovaCategoria')">Adicionar Categoria</button>
 </section>
 
-<!-- Modais -->
 <div id="modalSalario" class="modal">
-    <h2>Definir Salário</h2>
-    <input type="number" placeholder="R$ 2300,00" id="salarioInput">
-    <button onclick="salvarSalario()">Salvar</button>
-    <button onclick="fecharModal('modalSalario')">Cancelar</button>
+    <div class="modal-content">
+        <h2>Definir Salário</h2>
+        <input type="text" placeholder="R$ 0,00" id="salarioInput" onkeyup="formatarMoeda(this)">
+        <button onclick="salvarSalario()">Salvar</button>
+        <button onclick="fecharModal('modalSalario')">Cancelar</button>
+    </div>
 </div>
 
+<!-- Modal para Nova Categoria -->
 <div id="modalNovaCategoria" class="modal">
-    <h2>Nova Categoria</h2>
-    <input type="text" placeholder="Digite a categoria" id="categoriaInput">
-    <button onclick="salvarCategoria()">Salvar</button>
-    <button onclick="fecharModal('modalNovaCategoria')">Cancelar</button>
+    <div class="modal-content">
+        <h2>Nova Categoria</h2>
+        <form id="novaCategoriaForm">
+            <input type="text" placeholder="Digite o nome da categoria" id="categoriaInput" required>
+            <select id="mesSelect">
+                <option value="selecione">Selecione</option>
+                <option value="janeiro">Janeiro</option>
+                <option value="fevereiro">Fevereiro</option>
+                <option value="marco">Março</option>
+                <option value="abril">Abril</option>
+                <option value="maio">Maio</option>
+                <option value="junho">Junho</option>
+                <option value="julho">Julho</option>
+                <option value="agosto">Agosto</option>
+                <option value="setembro">Setembro</option>
+                <option value="outubro">Outubro</option>
+                <option value="novembro">Novembro</option>
+                <option value="dezembro">Dezembro</option>
+            </select>
+            <div class="btn-group">
+                <button type="button" onclick="salvarCategoria()">Salvar</button>
+                <button type="button" onclick="fecharModal('modalNovaCategoria')">Cancelar</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <script src="script/script.js"></script>

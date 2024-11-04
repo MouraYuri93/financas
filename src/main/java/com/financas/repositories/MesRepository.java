@@ -2,9 +2,11 @@ package com.financas.repositories;
 
 import com.financas.models.Mes;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
+import java.util.Optional;
+
 public interface MesRepository extends JpaRepository<Mes, Long> {
-    // Métodos de consulta específicos para Mes, se necessário
+    Optional<Mes> findByNome(String nome);
+
+    Optional<Mes> findByNomeAndAno(String nome, int ano); // Novo metodo para buscar por nome e ano
 }

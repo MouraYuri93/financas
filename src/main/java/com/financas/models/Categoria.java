@@ -10,11 +10,17 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nome;
 
-    @OneToMany(mappedBy = "categoria")
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Despesa> despesas;
+
+    @Column(nullable = false)
+    private Integer ano; // Adicionando ano
+
+    @Column(nullable = false)
+    private String mes; // Adicionando mês
 
     // Getters e Setters
     public Long getId() {
@@ -39,5 +45,21 @@ public class Categoria {
 
     public void setDespesas(List<Despesa> despesas) {
         this.despesas = despesas;
+    }
+
+    public Integer getAno() {
+        return ano;
+    }
+
+    public void setAno(Integer ano) {
+        this.ano = ano;
+    }
+
+    public String getMes() {
+        return mes;
+    }
+
+    public void setMes(String mes) {
+        this.mes = mes;
     }
 }

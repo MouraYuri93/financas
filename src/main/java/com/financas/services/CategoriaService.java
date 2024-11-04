@@ -18,8 +18,8 @@ public class CategoriaService {
         return categoriaRepository.findAll();
     }
 
-    public Optional<Categoria> buscarPorId(Long id) {
-        return categoriaRepository.findById(id);
+    public Optional<Categoria> buscarPorNome(String nome) {
+        return categoriaRepository.findByNome(nome);
     }
 
     public Categoria salvar(Categoria categoria) {
@@ -28,5 +28,9 @@ public class CategoriaService {
 
     public void remover(Long id) {
         categoriaRepository.deleteById(id);
+    }
+
+    public Categoria atualizar(Categoria categoria) {
+        return categoriaRepository.save(categoria);
     }
 }

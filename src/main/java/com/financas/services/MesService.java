@@ -1,6 +1,7 @@
 package com.financas.services;
 
 import com.financas.models.Mes;
+import com.financas.models.Despesa;
 import com.financas.repositories.MesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,19 @@ public class MesService {
 
     public void remover(Long id) {
         mesRepository.deleteById(id);
+    }
+
+    public Optional<Mes> buscarPorNome(String nome) {
+        return mesRepository.findByNome(nome);
+    }
+
+    public Optional<Mes> buscarPorNomeEAno(String mesCapitalizado, int ano) {
+        return mesRepository.findByNomeAndAno(mesCapitalizado, ano);
+    }
+
+    // Metodo para buscar todas as categorias associadas a um mês específico
+    public List<Despesa> buscarDespesasPorMesEAno(String mes, int ano) {
+        Optional<Mes> mesObj = buscarPorNomeEAno(mes, ano);
+        return mesObj.map(Mes::getDespesas).orElse(List.of()); // Retorna as despesas ou uma lista vazia se não existir
     }
 }

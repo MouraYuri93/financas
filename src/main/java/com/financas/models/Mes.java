@@ -13,7 +13,10 @@ public class Mes {
     @Column(nullable = false)
     private String nome;
 
-    @OneToMany(mappedBy = "mes")
+    @Column(nullable = false) // Adiciona a coluna ano
+    private int ano;
+
+    @OneToMany(mappedBy = "mes", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Despesa> despesas;
 
     // Getters e Setters
@@ -31,6 +34,14 @@ public class Mes {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public int getAno() { // Getter para ano
+        return ano;
+    }
+
+    public void setAno(int ano) { // Setter para ano
+        this.ano = ano;
     }
 
     public List<Despesa> getDespesas() {

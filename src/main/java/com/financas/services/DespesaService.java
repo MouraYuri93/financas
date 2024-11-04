@@ -7,6 +7,7 @@ import com.financas.repositories.DespesaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,14 +25,6 @@ public class DespesaService {
         return despesaRepository.findById(id);
     }
 
-    public List<Despesa> buscarPorCategoria(Categoria categoria) {
-        return despesaRepository.findByCategoria(categoria);
-    }
-
-    public List<Despesa> buscarPorMes(Mes mes) {
-        return despesaRepository.findByMes(mes);
-    }
-
     public List<Despesa> buscarPorCategoriaEMes(Categoria categoria, Mes mes) {
         return despesaRepository.findByCategoriaAndMes(categoria, mes);
     }
@@ -45,6 +38,25 @@ public class DespesaService {
     }
 
     public void atualizar(Despesa despesa) {
+        despesaRepository.save(despesa);
+    }
 
+    public BigDecimal calcularTotalDespesasPorMes(Mes mesObj) {
+        List<Despesa> despesas = despesaRepository.findByMes(mesObj);
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (Despesa despesa : despesas) {
+            total = total.add(despesa.getValor());
+        }
+
+        return total;
+    }
+
+    public BigDecimal calcularTotalPorMes(Mes mesEncontrado) {
+        return calcularTotalDespesasPorMes(mesEncontrado);
+    }
+
+    public List<Despesa> buscarPorMes(Mes mesEncontrado) {
+        return despesaRepository.findByMes(mesEncontrado);
     }
 }
