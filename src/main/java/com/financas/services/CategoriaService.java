@@ -1,10 +1,11 @@
 package com.financas.services;
 
 import com.financas.models.Categoria;
+import com.financas.models.CategoriaMes;
 import com.financas.models.Mes;
+import com.financas.repositories.CategoriaMesRepository;
 import com.financas.repositories.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,9 @@ public class CategoriaService {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private CategoriaMesRepository categoriaMesRepository;
 
     // Retorna todas as categorias
     public List<Categoria> listarTodas() {
@@ -51,4 +55,28 @@ public class CategoriaService {
         return categoriaRepository.findByNomeAndAno(nome, ano);
     }
 
+    // Associa uma categoria a um mês e ano específico
+    public CategoriaMes associarCategoriaMes(Long categoriaId, String mes, int ano) {
+        Optional<Categoria> categoria = categoriaRepository.findById(categoriaId);
+        if (categoria.isPresent()) {
+            CategoriaMes categoriaMes = new CategoriaMes();
+            categoriaMes.setCategoria(categoria.get());
+            categoriaMes.setMes(mes);
+            categoriaMes.setAno(ano);
+            return categoriaMesRepository.save(categoriaMes);
+        }
+        throw new IllegalArgumentException("Categoria não encontrada com ID: " + categoriaId);
+    }
+
+    // Busca todas as categorias associadas a um mês e ano específicos
+    public List<Categoria> buscarPorMesEAno(String mes, int ano) {
+        return categoriaRepository.findAll().stream()
+                .filter(c -> c.getMes().equalsIgnoreCase(mes) && c.getAno() == ano)
+                .toList();
+    }
+
+    // Busca uma categoria pelo ID
+    public Optional<Categoria> buscarPorId(Long id) {
+        return categoriaRepository.findById(id);
+    }
 }

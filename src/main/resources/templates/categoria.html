@@ -18,7 +18,12 @@
     <ul>
         <tr th:each="categoria : ${todasCategorias}">
             <li>
-                <a th:href="@{/categoria(categoria=${categoria.nome}, mes=${mes}, ano=${ano})}" th:text="${categoria.nome}">Categoria</a>
+                <a
+                        href="#"
+                        th:data-categoria="${categoria.nome}"
+                        onclick="mostrarCategoriaSelecionada(event)"
+                        th:text="${categoria.nome}">
+                </a>
             </li>
         </tr>
     </ul>
@@ -29,6 +34,6 @@
     <button onclick="navegarCategoriaProxima()">Próxima Categoria &#8250;</button>
 </footer>
 
-<script src="../static/js/script.js"></script>
+<script src="js/script.js"></script>
 </body>
 </html>

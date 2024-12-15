@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finanças - Mês</title>
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body onload="carregarCategorias()">
 <header>
     <h1 th:text="${mes} + ' - Finanças'">Mês - Finanças</h1>
 </header>
@@ -14,13 +14,15 @@
 <section>
     <button class="back-button" onclick="voltarParaInicial()">⬅ Voltar</button>
     <h2>Categorias</h2>
-    <ul>
-        <li><a th:href="@{/categoria(categoria='cartao_credito', mes=${mes})}">Cartão de Crédito - R$ 0,00</a></li>
-        <li><a th:href="@{/categoria(categoria='educacao', mes=${mes})}">Educação - R$ 0,00</a></li>
-        <li><a th:href="@{/categoria(categoria='emprestimo', mes=${mes})}">Empréstimo - R$ 0,00</a></li>
-        <li><a th:href="@{/categoria(categoria='entretenimento', mes=${mes})}">Entretenimento - R$ 0,00</a></li>
-        <li><a th:href="@{/categoria(categoria='moradia', mes=${mes})}">Moradia - R$ 0,00</a></li>
-        <li><a th:href="@{/categoria(categoria='saude', mes=${mes})}">Saúde - R$ 0,00</a></li>
+
+    <!-- Lista de categorias -->
+    <ul id="categoriaLista">
+        <li th:each="categoria : ${categorias}">
+            <span th:text="${categoria.nome}">Categoria</span>
+            <!-- Botões de Editar e Deletar -->
+            <button onclick="editarCategoria([[${categoria.id}]], [[${categoria.nome}]])">Editar</button>
+            <button onclick="deletarCategoria([[${categoria.id}]])">Deletar</button>
+        </li>
     </ul>
 </section>
 
@@ -34,6 +36,6 @@
     <button onclick="navegarProximoMes()">Próximo Mês &#187;</button>
 </footer>
 
-<script src="../static/js/script.js"></script>
+<script src="js/script.js"></script>
 </body>
 </html>

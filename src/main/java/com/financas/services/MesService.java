@@ -49,4 +49,12 @@ public class MesService {
     public Optional<Mes> buscarPorNomeAndAno(String mes, int ano) {
         return mesRepository.findByNomeAndAno(mes, ano); // Usando o repositório para buscar diretamente
     }
+
+    // Método para salvar ano e mês
+    public void salvarAnoMes(int ano, String mes) {
+        Mes mesObj = new Mes();
+        mesObj.setAno(ano);
+        mesObj.setNome(mes);
+        mesRepository.save(mesObj);  // Salvar no banco de dados
+    }
 }
