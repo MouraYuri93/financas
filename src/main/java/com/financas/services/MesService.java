@@ -44,4 +44,9 @@ public class MesService {
         Optional<Mes> mesObj = buscarPorNomeEAno(mes, ano);
         return mesObj.map(Mes::getDespesas).orElse(List.of()); // Retorna as despesas ou uma lista vazia se não existir
     }
+
+    // Corrigido método de busca de Mes por nome e ano
+    public Optional<Mes> buscarPorNomeAndAno(String mes, int ano) {
+        return mesRepository.findByNomeAndAno(mes, ano); // Usando o repositório para buscar diretamente
+    }
 }

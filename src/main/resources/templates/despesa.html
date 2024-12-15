@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Despesas - Categoria</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+<header>
+    <h1 th:text="${categoria.nome} + ' - ' + ${mes.nome} + ' - ' + ${ano}">Despesas - Categoria</h1>
+</header>
+
+<section>
+    <button class="back-button" onclick="voltarParaCategoria()">⬅ Voltar</button>
+    <h2>Despesas</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Descrição</th>
+            <th>Data</th>
+            <th>Valor</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="despesa : ${despesas}">
+            <td th:text="${despesa.descricao}">Descrição</td>
+            <td th:text="${#dates.format(despesa.data, 'dd/MM/yyyy')}">Data</td>
+            <td th:text="${#numbers.formatCurrency(despesa.valor, 'BRL')}">Valor</td>
+            <td>
+                <button onclick="editarDespesa(${despesa.id})">✏️</button>
+                <button onclick="removerDespesa(${despesa.id})">🗑️</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Botão para abrir o modal -->
+    <button onclick="abrirModal('modalNovaDespesa')">+ Nova Despesa</button>
+</section>
+
+<!-- Modal de Adicionar Nova Despesa -->
+<div id="modalNovaDespesa" class="modal">
+    <div class="modal-content">
+        <h2>Adicionar Nova Despesa</h2>
+        <input type="text" id="descricaoInput" placeholder="Descrição">
+        <input type="text" id="valorInput" placeholder="R$ 0,00" onkeyup="formatarMoeda(this)">
+        <input type="date" id="dataInput" placeholder="dd/mm/aaaa">
+        <input type="hidden" id="categoriaSelect" value="${categoriaId}">
+        <input type="hidden" id="anoSelect" value="${ano}">
+        <div class="btn-group">
+            <button class="btn-confirm" onclick="incluirDespesa()">Incluir</button>
+            <button class="btn-cancel" onclick="fecharModal('modalNovaDespesa')">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script src="../static/js/script.js"></script>
+</body>
+</html>

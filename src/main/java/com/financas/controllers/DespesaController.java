@@ -81,14 +81,15 @@ public class DespesaController {
     }
 
     @PostMapping("/remover")
-    public String removerDespesa(@RequestParam Long id, Model model) {
+    public String removerDespesa(@RequestParam Long id, @RequestParam int ano, Model model) {
         Optional<Despesa> despesa = despesaService.buscarPorId(id);
         if (despesa.isPresent()) {
             despesaService.remover(id);
-            return "redirect:/categoria?categoria=" + despesa.get().getCategoria().getNome() + "&mes=" + despesa.get().getMes().getNome();
+            return "redirect:/categoria?categoria=" + despesa.get().getCategoria().getNome() + "&mes=" + despesa.get().getMes().getNome() + "&ano=" + ano;
         } else {
             model.addAttribute("erro", "Despesa não encontrada.");
             return "erro";
         }
     }
+
 }

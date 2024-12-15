@@ -31,28 +31,25 @@ public class MesController {
     @GetMapping("/mes")
     public String visualizarMes(@RequestParam String mes, @RequestParam int ano, Model model) {
         String mesCapitalizado = mes.substring(0, 1).toUpperCase() + mes.substring(1);
-
         Optional<Mes> mesObj = mesService.buscarPorNomeEAno(mesCapitalizado, ano);
 
         if (mesObj.isPresent()) {
             Mes mesEncontrado = mesObj.get();
             BigDecimal totalMes = despesaService.calcularTotalPorMes(mesEncontrado);
             List<Despesa> despesas = despesaService.buscarPorMes(mesEncontrado);
-            List<Categoria> categorias = categoriaService.listarTodas(); // Busca todas as categorias
 
             model.addAttribute("mes", mesCapitalizado);
             model.addAttribute("totalMes", totalMes);
-            model.addAttribute("ano", ano);
+            model.addAttribute("ano", ano);  // Passando o ano
             model.addAttribute("despesas", despesas);
-            model.addAttribute("categorias", categorias); // Adiciona as categorias ao modelo
         } else {
             model.addAttribute("mes", mesCapitalizado);
             model.addAttribute("totalMes", BigDecimal.ZERO);
             model.addAttribute("ano", ano);
-            model.addAttribute("despesas", List.of());
-            model.addAttribute("categorias", List.of());
+            model.addAttribute("despesas", List.of());  // Lista vazia se não houver despesas
         }
 
-        return "mes"; // Retorna a view mes.html
+        return "mes";
     }
+
 }

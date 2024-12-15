@@ -4,78 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finanças - Categoria</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
 
 <header>
-    <h1 th:text="${categoria} + ' - ' + ${mes}">Categoria - Mês</h1>
+    <h1 th:text="${mes} + ' - Finanças'">Mês - Finanças</h1>
 </header>
 
 <section>
-    <button class="back-button" onclick="voltarParaMes()">⬅ Voltar</button>
-    <h2>Gastos</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Descrição</th>
-            <th>Data</th>
-            <th>Valor</th>
-            <th>Ações</th>
+    <button class="back-button" onclick="voltarParaInicial()">⬅ Voltar</button>
+    <h2>Categorias</h2>
+    <ul>
+        <tr th:each="categoria : ${todasCategorias}">
+            <li>
+                <a th:href="@{/categoria(categoria=${categoria.nome}, mes=${mes}, ano=${ano})}" th:text="${categoria.nome}">Categoria</a>
+            </li>
         </tr>
-        </thead>
-        <tbody>
-        <tr th:each="despesa : ${despesas}">
-            <td th:text="${despesa.descricao}">Descrição</td>
-            <td th:text="${#dates.format(despesa.data, 'dd/MM/yyyy')}">Data</td>
-            <td th:text="${#numbers.formatCurrency(despesa.valor, 'BRL')}">Valor</td>
-            <td>
-                <button onclick="editarDespesa(${despesa.id})">✏️</button>
-                <button onclick="removerDespesa(${despesa.id})">🗑️</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    </ul>
 </section>
-
-<button onclick="abrirModal('modalNovaDespesa')">+ Nova Despesa</button>
-
-<!-- Modal de Adicionar Nova Despesa -->
-<div id="modalNovaDespesa" class="modal">
-    <div class="modal-content">
-        <h2>Adicionar Nova Despesa</h2>
-        <input type="text" id="descricaoInput" placeholder="Descrição">
-        <input type="text" id="valorInput" placeholder="R$ 0,00" onkeyup="formatarMoeda(this)">
-        <input type="date" id="dataInput" placeholder="dd/mm/aaaa">
-        <input type="hidden" id="categoriaSelect" value="${categoriaId}">
-        <input type="hidden" id="anoSelect" value="${ano}"> <!-- Adiciona o ano como valor oculto -->
-        <div class="btn-group">
-            <button class="btn-confirm" onclick="incluirDespesa()">Incluir</button>
-            <button class="btn-cancel" onclick="fecharModal('modalNovaDespesa')">Cancelar</button>
-        </div>
-    </div>
-</div>
-
-<!-- Modal de Edição -->
-<div id="modalEditarDespesa" class="modal">
-    <div class="modal-content">
-        <h2>Editar Despesa</h2>
-        <input type="text" id="descricaoEditar" placeholder="Descrição" required>
-        <input type="text" id="valorEditar" placeholder="Valor" required onfocus="this.value='R$ '" onkeyup="formatarMoeda(this)">
-        <input type="date" id="dataEditar" required>
-        <div class="btn-group">
-            <button class="btn-confirm" onclick="salvarEdicao()">Salvar</button>
-            <button class="btn-cancel" onclick="fecharModal('modalEditarDespesa')">Cancelar</button>
-        </div>
-    </div>
-</div>
 
 <footer class="navigation-footer">
     <button onclick="navegarCategoriaAnterior()">&#8249; Categoria Anterior</button>
     <button onclick="navegarCategoriaProxima()">Próxima Categoria &#8250;</button>
 </footer>
 
-<script src="script/script.js"></script>
+<script src="../static/js/script.js"></script>
 </body>
 </html>

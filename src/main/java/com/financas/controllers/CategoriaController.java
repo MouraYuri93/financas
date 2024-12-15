@@ -48,29 +48,27 @@ public class CategoriaController {
     public String visualizarCategoria(
             @RequestParam String categoria,
             @RequestParam String mes,
+            @RequestParam int ano,  // Certificando-se de que 'ano' também é passado na URL
             Model model
     ) {
         Optional<Categoria> categoriaObj = categoriaService.buscarPorNome(categoria);
-        Optional<Mes> mesObj = mesService.buscarPorNome(mes);
+        Optional<Mes> mesObj = mesService.buscarPorNomeEAno(mes, ano);  // Alteração aqui
 
         if (categoriaObj.isPresent() && mesObj.isPresent()) {
             List<Despesa> despesas = despesaService.buscarPorCategoriaEMes(categoriaObj.get(), mesObj.get());
-
-            List<Categoria> todasCategorias = categoriaService.listarTodas();
-
             model.addAttribute("categoria", capitalize(categoriaObj.get().getNome()));
-            model.addAttribute("mes", capitalize(mesObj.get().getNome()));
+            model.addAttribute("mes", capitalize(mes));
+            model.addAttribute("ano", ano);  // Passando o ano para a view
             model.addAttribute("despesas", despesas);
-            model.addAttribute("todasCategorias", todasCategorias);
         } else {
-            model.addAttribute("erro", true);
-            return "categoria";
+            model.addAttribute("erro", "Categoria ou mês não encontrados.");
+            return "erro";
         }
 
         return "categoria";
     }
 
-    @PostMapping("/categoria/incluir")
+        @PostMapping("/categoria/incluir")
     public ResponseEntity<Void> incluirCategoria(@RequestBody Categoria categoria) {
         categoriaService.salvar(categoria); // Assumindo que você tem um método para salvar a categoria
         return ResponseEntity.ok().build();
