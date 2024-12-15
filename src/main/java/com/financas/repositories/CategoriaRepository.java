@@ -1,6 +1,7 @@
 package com.financas.repositories;
 
 import com.financas.models.Categoria;
+import com.financas.models.CategoriaMes;
 import com.financas.models.Mes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -22,4 +23,8 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
     // Busca categoria por nome e ano
     Optional<Categoria> findByNomeAndAno(String nome, int ano);
+
+    // Busca por categoria, mês e ano
+    List<CategoriaMes> findByMesAndAno(String mes, int ano);
+
 }
